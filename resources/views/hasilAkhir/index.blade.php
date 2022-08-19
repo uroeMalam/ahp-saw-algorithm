@@ -149,51 +149,24 @@
             {{-- step 4 --}}
             <br>
             <br>
-            <h3 class="pl-4">Step 3 : Hasil</h3>
+            <h3 class="pl-4">Step 4 : Hasil Akhir</h3>
             <div class="table-responsive px-4">
               <table class="table table-flush text-center data-table">
                 <thead class="thead-light">
                   <tr>
                     <th style="font-size: 13px;">No</th>
                     <th style="font-size: 13px;">Nama</th>
-                    @foreach ($kriteria as $item)
-                        <th style="font-size: 13px;">{{ $item->kode_kriteria }}</th>
-                    @endforeach
+                    <th style="font-size: 13px;">Hasil</th>
+                    <th style="font-size: 13px;">Rangking</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($data as $d)
+                  @foreach ($hasilAkhir as $d)
                       <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $d->nama_dosen }}</td>
-                        @foreach ($kriteria as $item)
-                          <td>
-                            {{-- check kalau kategori dan alternatif sama maka tampilkan bobot sub kriteria --}}
-                            @foreach ($normalisasi as $i)
-                              @if ($d->id == $i->id_alternatif && $item->id == $i->id_kriteria)
-                                  {{-- menentukan perhitungan benefit atau cost --}}
-                                  @if ($i->jenis == "Benefit")
-                                      {{-- di kali dengan hasil AHP --}}
-                                      @foreach ($hasil as $h)
-                                          @if ($h->id == $i->id_kriteria)
-                                              {{ ($i->bobot / $i->max_data) * $h->bobot_total }}
-                                              @break
-                                          @endif
-                                      @endforeach
-                                  @endif
-                                  @if ($i->jenis == "Cost")
-                                      {{-- di kali dengan hasil AHP --}}
-                                      @foreach ($hasil as $h)
-                                          @if ($h->id == $i->id_kriteria)
-                                              {{ ($i->bobot / $i->min_data) * $h->bobot_total }}
-                                              @break
-                                          @endif
-                                      @endforeach
-                                  @endif
-                              @endif
-                            @endforeach
-                          </td>
-                        @endforeach
+                        <td>{{ $d->hasil }}</td>
+                        <td>{{ $loop->iteration }}</td>
                       </tr>
                   @endforeach
                 </tbody>
